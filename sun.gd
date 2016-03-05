@@ -8,6 +8,7 @@ func _ready():
 
 func _on_Area2D_body_enter(body):
 	var spring = body.get_node("spring")
-	activate_spring_area.disconnect("body_enter",self,"_on_Area2D_body_enter")
-	spring.set_node_a(get_path())
+	
+	if (spring != null && (spring.get_node_a() == null || spring.get_node_a().is_empty())):
+		spring.set_node_a(get_path())
 

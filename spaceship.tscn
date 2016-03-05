@@ -16,7 +16,7 @@ extents = Vector2( 10, 18 )
 
 [node name="spaceship" type="Node2D"]
 
-__meta__ = { "__editor_plugin_screen__":"2D" }
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="trail_renderer" type="Node2D" parent="."]
 
@@ -51,7 +51,7 @@ velocity/angular = 0.0
 damp_override/linear = -1.0
 damp_override/angular = -1.0
 script/script = ExtResource( 2 )
-__meta__ = { "__editor_plugin_screen__":"2D", "_editor_collapsed":true }
+__meta__ = { "__editor_plugin_screen__":"2D" }
 player_index = 0
 
 [node name="spaceship_sprite" type="Sprite" parent="spaceship_root/spaceship_physics"]
@@ -72,7 +72,7 @@ transform/pos = Vector2( 0, 15 )
 node_a = NodePath("")
 node_b = NodePath("..")
 bias/bias = 0.0
-collision/exclude_nodes = true
+collision/exclude_nodes = false
 length = 25.0
 rest_length = 20.0
 stiffness = 10.0

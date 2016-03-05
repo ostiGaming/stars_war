@@ -6,20 +6,23 @@ var MAX_SPEED = 250
 
 export var player_index = 1
 var player_actions = [
-	{"up":"ui_up", "down":"ui_down", "left":"ui_left", "right":"ui_right"},
-	{"up":"player2_up", "down":"player2_down", "left":"player2_left", "right":"player2_right"}
+	{"up":"ui_up", "down":"ui_down", "left":"ui_left", "right":"ui_right", "action":"player1_action"},
+	{"up":"player2_up", "down":"player2_down", "left":"player2_left", "right":"player2_right", "action":"player2_action"}
 	]
 
 var up_pressed = false
 var down_pressed = false
 var left_pressed = false
 var right_pressed = false
+var spring
 
 func _draw():
 	draw_circle(get_pos(), 4, Color("#00FF00"))
 	update()
 
 func _ready():
+	spring = get_node("spring")
+	
 	set_fixed_process(true)
 	set_process_input(true)
 
@@ -63,6 +66,9 @@ func _input(event):
 		right_pressed = true
 	if (event.is_action_released(player_actions[player_index]["right"])):
 		right_pressed = false
+		
+	if (event.is_action_pressed(player_actions[player_index]["action"])):
+		spring.set_node_a(NodePath(""))
 
 func _integrate_forces(state):
 	var velocity = state.get_linear_velocity()
