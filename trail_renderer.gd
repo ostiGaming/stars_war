@@ -77,7 +77,7 @@ func decay_trails():
 				decayed = true
 				trail.remove_point(t)
 				decay.remove(t)
-				if t == 0: 
+				if t == 0 && decays.size() > 1: 
 					decays.remove(i)
 					trails.remove(i)
 			else: break

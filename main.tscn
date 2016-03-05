@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://assets/bg.jpg" type="Texture" id=1]
 [ext_resource path="res://spaceship.tscn" type="PackedScene" id=2]
+[ext_resource path="res://black_hole.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sun.scn" type="PackedScene" id=4]
 
 [node name="game" type="Node2D"]
 
@@ -25,6 +27,7 @@ transform/pos = Vector2( 1399.75, 893.724 )
 [node name="spaceship_physics" parent="player1/spaceship_root"]
 
 transform/pos = Vector2( -2.51752, 0 )
+mass = 0.2
 
 [node name="player2" parent="." instance=ExtResource( 2 )]
 
@@ -38,7 +41,20 @@ transform/pos = Vector2( 541.269, 881.136 )
 
 [node name="spaceship_physics" parent="player2/spaceship_root"]
 
+mass = 0.2
 player_index = 1
+
+[node name="black_hole" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 960, 540 )
+
+[node name="sun1" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 1404.62, 157.892 )
+
+[node name="sun2" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 563.9, 172.246 )
 
 
 [editable path="player1"]
