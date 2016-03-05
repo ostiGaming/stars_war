@@ -15,6 +15,10 @@ var down_pressed = false
 var left_pressed = false
 var right_pressed = false
 
+func _draw():
+	draw_circle(get_pos(), 4, Color("#00FF00"))
+	update()
+
 func _ready():
 	set_fixed_process(true)
 	set_process_input(true)
