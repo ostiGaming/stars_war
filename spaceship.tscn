@@ -1,13 +1,9 @@
 [gd_scene load_steps=6 format=1]
 
-[ext_resource path="res://trail_renderer.gd" type="Script" id=1]
-[ext_resource path="res://spaceship.gd" type="Script" id=2]
-[ext_resource path="res://ship-sprite.png" type="Texture" id=3]
-
-[sub_resource type="Curve2D" id=1]
-
-bake_interval = 5.0
-_data = { "points":Vector2Array(  ) }
+[ext_resource path="res://wrapable.gd" type="Script" id=1]
+[ext_resource path="res://trail_renderer.gd" type="Script" id=2]
+[ext_resource path="res://spaceship.gd" type="Script" id=3]
+[ext_resource path="res://ship-sprite.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=2]
 
@@ -16,13 +12,14 @@ extents = Vector2( 10, 18 )
 
 [node name="spaceship" type="Node2D"]
 
-__meta__ = { "__editor_plugin_screen__":"2D" }
+script/script = ExtResource( 1 )
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="trail_renderer" type="Node2D" parent="."]
 
-script/script = ExtResource( 1 )
-trail_color = Color( 0.661906, 0.96875, 0.563843, 1 )
-trail_curve = SubResource( 1 )
+script/script = ExtResource( 2 )
+trail_width = 5
+trail_color = Color( 0.755013, 0.166443, 0.789062, 1 )
 trail_source = NodePath("../spaceship_root/spaceship_physics/spring")
 
 [node name="spaceship_root" type="Node2D" parent="."]
@@ -50,14 +47,14 @@ velocity/linear = Vector2( 0, 0 )
 velocity/angular = 0.0
 damp_override/linear = -1.0
 damp_override/angular = -1.0
-script/script = ExtResource( 2 )
-__meta__ = { "__editor_plugin_screen__":"2D", "_editor_collapsed":true }
+script/script = ExtResource( 3 )
+__meta__ = { "__editor_plugin_screen__":"2D" }
 player_index = 0
 
 [node name="spaceship_sprite" type="Sprite" parent="spaceship_root/spaceship_physics"]
 
 transform/pos = Vector2( 0.707107, -4.29289 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 __meta__ = { "__editor_plugin_screen__":"2D" }
 
 [node name="collision" type="CollisionShape2D" parent="spaceship_root/spaceship_physics"]
