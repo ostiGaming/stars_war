@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://trail_renderer.gd" type="Script" id=1]
+[ext_resource path="res://spaceship.gd" type="Script" id=2]
+[ext_resource path="res://ship-sprite.png" type="Texture" id=3]
+
+[sub_resource type="Curve2D" id=1]
+
+bake_interval = 5.0
+_data = { "points":Vector2Array(  ) }
+
+[node name="root" type="Node2D"]
+
+__meta__ = { "__editor_plugin_screen__":"2D" }
+
+[node name="trail_renderer" type="Node2D" parent="."]
+
+transform/scale = Vector2( 1, 1 )
+script/script = ExtResource( 1 )
+trail_color = Color( 0.661906, 0.96875, 0.563843, 1 )
+trail_curve = SubResource( 1 )
+trail_source = NodePath("../spaceship/spaceship_physics")
+
+[node name="spaceship" type="Node2D" parent="."]
+
+transform/pos = Vector2( 525.104, 289.76 )
+
+[node name="spaceship_physics" type="RigidBody2D" parent="spaceship"]
+
+transform/scale = Vector2( 1, 1 )
+input/pickable = false
+collision/layers = 1
+collision/mask = 1
+mode = 0
+mass = 0.2
+friction = 0.0
+bounce = 0.0
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+velocity/linear = Vector2( 0, 0 )
+velocity/angular = 0.0
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+script/script = ExtResource( 2 )
+__meta__ = { "__editor_plugin_screen__":"2D" }
+
+[node name="spaceship_sprite" type="Sprite" parent="spaceship/spaceship_physics"]
+
+transform/pos = Vector2( 0.707107, -4.29289 )
+texture = ExtResource( 3 )
+
+
