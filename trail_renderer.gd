@@ -1,7 +1,7 @@
 extends Node2D
 
 var distance = 10
-var resolution = 8
+var resolution = 5
 var trail_length = 30
 var decay_length = 5.0
 var capturing = false
@@ -25,8 +25,9 @@ func _draw():
 		for t in range(0, trail.get_point_count()):
 			var curve_pos = trail.interpolatef(t)
 			# draw_circle(curve_pos, 3, Color("#FF00FF"))
-			for t_f in range(1, resolution):
-				var i = t + 0.1*t_f
+			var step = 1.0 / float(resolution)
+			for t_f in range(0, resolution):
+				var i = t + step*t_f
 				var inter_pos = trail.interpolatef(i)
 				draw_circle(inter_pos, trail_width, get_trail_brush(trail_idx, i))
 
