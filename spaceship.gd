@@ -4,7 +4,7 @@ var LINEAR_FORCE = 150
 var ANGULAR_FORCE = 5
 var MAX_SPEED = 250
 
-var player_index = 1
+export var player_index = 1
 var player_actions = [
 	{"up":"ui_up", "down":"ui_down", "left":"ui_left", "right":"ui_right"},
 	{"up":"player2_up", "down":"player2_down", "left":"player2_left", "right":"player2_right"}
@@ -14,6 +14,10 @@ var up_pressed = false
 var down_pressed = false
 var left_pressed = false
 var right_pressed = false
+
+func _draw():
+	draw_circle(get_pos(), 4, Color("#00FF00"))
+	update()
 
 func _ready():
 	set_fixed_process(true)

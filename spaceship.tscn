@@ -1,20 +1,37 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=6 format=1]
 
-[ext_resource path="res://spaceship.gd" type="Script" id=1]
-[ext_resource path="res://ship-sprite.png" type="Texture" id=2]
+[ext_resource path="res://trail_renderer.gd" type="Script" id=1]
+[ext_resource path="res://spaceship.gd" type="Script" id=2]
+[ext_resource path="res://ship-sprite.png" type="Texture" id=3]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="Curve2D" id=1]
+
+bake_interval = 5.0
+_data = { "points":Vector2Array(  ) }
+
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 18 )
 
-[node name="spaceship_physics" type="RigidBody2D"]
+[node name="spaceship" type="Node2D"]
 
-transform/pos = Vector2( 525.505, 283.607 )
-transform/scale = Vector2( 1, 1 )
+__meta__ = { "__editor_plugin_screen__":"2D" }
+
+[node name="trail_renderer" type="Node2D" parent="."]
+
+script/script = ExtResource( 1 )
+trail_color = Color( 0.661906, 0.96875, 0.563843, 1 )
+trail_curve = SubResource( 1 )
+trail_source = NodePath("../spaceship_root/spaceship_physics/spring")
+
+[node name="spaceship_root" type="Node2D" parent="."]
+
+[node name="spaceship_physics" type="RigidBody2D" parent="spaceship_root"]
+
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, -0, 0, 1, 0, 0 )
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -33,22 +50,23 @@ velocity/linear = Vector2( 0, 0 )
 velocity/angular = 0.0
 damp_override/linear = -1.0
 damp_override/angular = -1.0
-script/script = ExtResource( 1 )
-__meta__ = { "__editor_plugin_screen__":"2D" }
+script/script = ExtResource( 2 )
+__meta__ = { "__editor_plugin_screen__":"2D", "_editor_collapsed":true }
+player_index = 0
 
-[node name="spaceship_sprite" type="Sprite" parent="."]
+[node name="spaceship_sprite" type="Sprite" parent="spaceship_root/spaceship_physics"]
 
 transform/pos = Vector2( 0.707107, -4.29289 )
-texture = ExtResource( 2 )
-offset = Vector2( 0, 4 )
+texture = ExtResource( 3 )
+__meta__ = { "__editor_plugin_screen__":"2D" }
 
-[node name="collision" type="CollisionShape2D" parent="."]
+[node name="collision" type="CollisionShape2D" parent="spaceship_root/spaceship_physics"]
 
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
-[node name="spring" type="DampedSpringJoint2D" parent="."]
+[node name="spring" type="DampedSpringJoint2D" parent="spaceship_root/spaceship_physics"]
 
 transform/pos = Vector2( 0, 15 )
 node_a = NodePath("")
