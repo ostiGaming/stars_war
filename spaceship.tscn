@@ -21,7 +21,7 @@ extents = Vector2( 22, 22 )
 [node name="spaceship_world" type="Node2D"]
 
 script/script = SubResource( 1 )
-__meta__ = { "__editor_plugin_screen__":"2D" }
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="trail_renderer" type="Node2D" parent="."]
 

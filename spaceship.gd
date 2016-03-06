@@ -45,7 +45,7 @@ func _draw():
 	
 	if (node_a != null && !node_a.is_empty() && node_b != null && !node_b.is_empty()):
 		var position = get_transform().basis_xform_inv(get_node(node_a).get_global_pos() - get_global_pos()) 
-		draw_line(position, Vector2(0, 0), Color("#000000"), 5)
+		draw_line(position, Vector2(0, 0), Color("#ffffff"), 4)
 
 func _ready():
 	spring = get_node("spring")
