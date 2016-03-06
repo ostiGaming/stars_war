@@ -4,6 +4,9 @@ var LINEAR_FORCE = 150
 var ANGULAR_FORCE = 5
 var MAX_SPEED = 250
 
+export(NodePath) var trail_renderer_path = null
+var trail_renderer
+
 export var player_index = 0
 var player_actions = [
 	{"up":"ui_up", "down":"ui_down", "left":"ui_left", "right":"ui_right", "action":"player1_action"},
@@ -17,22 +20,25 @@ var right_pressed = false
 
 var spring
 var initial_pos
+var trail_particle
 
 func _draw():
-	if spring != null:
-		spring.set_node_b(get_path());
+	spring.set_node_b(get_path());
 	
-		var node_a = spring.get_node_a()
-		var node_b = spring.get_node_b()
-		
-		if (node_a != null && !node_a.is_empty() && node_b != null && !node_b.is_empty()):
-			var position = get_transform().basis_xform_inv(get_node(node_a).get_global_pos() - get_global_pos()) 
-			draw_line(position, Vector2(0, 0), Color("#000000"), 5)
+	var node_a = spring.get_node_a()
+	var node_b = spring.get_node_b()
+	
+	if (node_a != null && !node_a.is_empty() && node_b != null && !node_b.is_empty()):
+		var position = get_transform().basis_xform_inv(get_node(node_a).get_global_pos() - get_global_pos()) 
+		draw_line(position, Vector2(0, 0), Color("#000000"), 5)
 	
 
 func _ready():
 	add_to_group("killable")
 	spring = get_node("spring")
+	trail_particle = get_node("power_particle")
+	trail_renderer = get_node(trail_renderer_path)
+	
 	initial_pos = get_pos()
 	
 	set_fixed_process(true)
@@ -63,8 +69,12 @@ func _fixed_process(delta):
 func _input(event):
 	if (event.is_action_pressed(player_actions[player_index]["up"])):
 		up_pressed = true
+		trail_particle.set_emitting(true)
+		trail_renderer.set_capturing(true)
 	if (event.is_action_released(player_actions[player_index]["up"])):
 		up_pressed = false
+		trail_particle.set_emitting(false)
+		trail_renderer.set_capturing(false)
 	
 	if (event.is_action_pressed(player_actions[player_index]["down"])):
 		down_pressed = true

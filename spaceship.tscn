@@ -22,6 +22,7 @@ player_index = 0
 trail_width = 5
 trail_color = Color( 0.755013, 0.166443, 0.789062, 1 )
 trail_source = NodePath("../spaceship_root/spaceship_physics/spring")
+trail_particle = NodePath("../spaceship_root/spaceship_physics/power_particle")
 
 [node name="spaceship_root" type="Node2D" parent="."]
 
@@ -50,6 +51,7 @@ damp_override/linear = -1.0
 damp_override/angular = -1.0
 script/script = ExtResource( 3 )
 __meta__ = { "__editor_plugin_screen__":"2D" }
+trail_renderer_path = NodePath("../../trail_renderer")
 player_index = 0
 
 [node name="spaceship_sprite" type="Sprite" parent="spaceship_root/spaceship_physics"]
@@ -75,5 +77,31 @@ length = 25.0
 rest_length = 20.0
 stiffness = 10.0
 damping = 1.0
+
+[node name="power_particle" type="Particles2D" parent="spaceship_root/spaceship_physics"]
+
+config/amount = 500
+config/lifetime = 1.5
+config/preprocess = 0.1
+config/emitting = false
+config/offset = Vector2( 0, 12 )
+config/local_space = false
+params/direction = 0.0
+params/spread = 25.0
+params/linear_velocity = 25.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 6.0
+params/final_size = 0.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color = Color( 0.796875, 0.102722, 0.102722, 1 )
 
 

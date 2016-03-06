@@ -14,13 +14,16 @@ export var player_index = 0
 export var trail_width = 5
 export(Color) var trail_color = Color(1.0, 1.0, 1.0, 1.0)
 export(NodePath) var trail_source = null
+export(NodePath) var trail_particle = null
 onready var _source = get_node(trail_source)
 
 func _ready():
 	set_process(true)
 	set_fixed_process(true)
 	set_process_input(true)
-	pass
+	
+	var yes = get_node(trail_particle)
+	yes.set_color(trail_color)
 
 func _draw():
 	for trail_idx in range(0, trails.size()):
@@ -115,11 +118,11 @@ func decay_trails():
 			else: break
 	return decayed
 
-func _input(ev):
-	if (ev.type == InputEvent.MOUSE_BUTTON && ev.pressed == 0):
-		capturing = !capturing
-		if (capturing): new_trail()
-		print("Capturing?: ", capturing)
+func set_capturing(value):
+	capturing = !capturing
+	if (capturing):
+		new_trail()
+	
 
 func get_trail_pos():
 	return _source.get_global_pos()
