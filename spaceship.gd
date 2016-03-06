@@ -43,7 +43,6 @@ func _draw():
 	if (node_a != null && !node_a.is_empty() && node_b != null && !node_b.is_empty()):
 		var position = get_transform().basis_xform_inv(get_node(node_a).get_global_pos() - get_global_pos()) 
 		draw_line(position, Vector2(0, 0), Color("#000000"), 5)
-	
 
 func _ready():
 	spring = get_node("spring")
@@ -75,6 +74,10 @@ func _fixed_process(delta):
 	set_applied_force(local_force)
 	set_angular_velocity(angular_velocity)
 	
+	for body in get_colliding_bodies():
+		if body.has_meta("trail_source") && body.get_meta("trail_source") != player_index:
+			kill()
+
 	update()
 
 func _input(event):

@@ -13,17 +13,18 @@ var collisions = []
 export var player_index = 0
 export var trail_width = 5
 export(Color) var trail_color = Color(1.0, 1.0, 1.0, 1.0)
-export(NodePath) var trail_source = null
-export(NodePath) var trail_particle = null
-onready var _source = get_node(trail_source)
+export(NodePath) var trail_source_path = null
+onready var trail_source = get_node(trail_source_path)
+
+export(NodePath) var trail_particle_path = null
+onready var trail_particle = get_node(trail_particle_path)
 
 func _ready():
 	set_process(true)
 	set_fixed_process(true)
 	set_process_input(true)
 	
-	var yes = get_node(trail_particle)
-	yes.set_color(trail_color)
+	trail_particle.set_color(trail_color)
 
 func _draw():
 	for trail_idx in range(0, trails.size()):
@@ -58,6 +59,7 @@ func _fixed_process(delta):
 			var point2 = trail.get_point_pos(t + 1)
 			
 			var body = StaticBody2D.new()
+			body.set_meta("trail_source", player_index)
 			var shape = RectangleShape2D.new()
 			
 			shape.set_extents((point2 - point1)/2)
@@ -98,7 +100,6 @@ func generate_trail():
 		# add new control point
 		trail.add_point(curpos, Vector2(0,0), Vector2(0,0), 0)
 		decay.push_front(OS.get_ticks_msec() + lifetime)
-		print("added control point at: ", curpos)
 		return true
 	return false
 	
@@ -127,10 +128,9 @@ func set_capturing(value):
 	capturing = !capturing
 	if (capturing):
 		new_trail()
-	
 
 func get_trail_pos():
-	return _source.get_global_pos()
+	return trail_source.get_global_pos()
 	
 func get_current_trail():
 	return trails[0]

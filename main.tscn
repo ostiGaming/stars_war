@@ -8,7 +8,7 @@
 
 [node name="game" type="Node2D"]
 
-__meta__ = { "__editor_plugin_screen__":"2D" }
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="bg" type="Sprite" parent="."]
 
@@ -20,6 +20,12 @@ texture = ExtResource( 1 )
 [node name="trail_renderer" parent="player1"]
 
 trail_color = Color( 0.345098, 0.819608, 0.192157, 1 )
+
+[node name="death_emitter" parent="player1"]
+
+config/lifetime = 1.3
+config/emit_timeout = 1.3
+config/explosiveness = 0.05
 
 [node name="spaceship_root" parent="player1"]
 
@@ -42,6 +48,12 @@ config/preprocess = 0.1
 
 player_index = 1
 trail_color = Color( 0.859375, 0.265198, 0.348754, 1 )
+
+[node name="death_emitter" parent="player2"]
+
+config/lifetime = 1.3
+config/emit_timeout = 1.3
+config/explosiveness = 0.05
 
 [node name="spaceship_root" parent="player2"]
 
@@ -94,6 +106,8 @@ collision/layers = 9
 collision/mask = 9
 
 [node name="wrapper" parent="." instance=ExtResource( 5 )]
+
+visibility/visible = false
 
 
 [editable path="player1"]

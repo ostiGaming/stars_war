@@ -4,24 +4,24 @@
 [ext_resource path="res://spaceship.gd" type="Script" id=2]
 [ext_resource path="res://ship-sprite.png" type="Texture" id=3]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 
-script/source = "extends Node\n\nonready var emitter = get_node(\"death_emitter\")\n\nfunc upon_spaceship_killed(death_pos):\n\temitter.set_global_pos(death_pos)\n\temitter.set_emitting(true)\n\nfunc _ready():\n\tget_node(\"spaceship_root/spaceship_physics\").connect(\"on_killed\", self, \"upon_spaceship_killed\")\n"
+script/source = "extends Node\n\nonready var emitter = get_node(\"death_emitter\")\nonready var spaceship = get_node(\"spaceship_root/spaceship_physics\")\nonready var trail_renderer = get_node(\"trail_renderer\")\n\nfunc upon_spaceship_killed(death_pos):\n\temitter.set_global_pos(death_pos)\n\temitter.set_emitting(true)\n\ttrail_renderer.new_trail()\n\t\nfunc _ready():\n\tspaceship.connect(\"on_killed\", self, \"upon_spaceship_killed\")"
 
-[sub_resource type="ColorRamp" id=3]
+[sub_resource type="ColorRamp" id=2]
 
 offsets = FloatArray( 0, 0.429887, 1 )
 colors = ColorArray( 0.597656, 0.0630341, 0.0630341, 1, 1, 0.613281, 0.722046, 1, 1, 1, 1, 1 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 18 )
 
 [node name="spaceship_world" type="Node2D"]
 
-script/script = SubResource( 2 )
-__meta__ = { "__editor_plugin_screen__":"2D", "_editor_collapsed":true }
+script/script = SubResource( 1 )
+__meta__ = { "__editor_plugin_screen__":"2D" }
 
 [node name="trail_renderer" type="Node2D" parent="."]
 
@@ -29,8 +29,8 @@ script/script = ExtResource( 1 )
 player_index = 0
 trail_width = 5
 trail_color = Color( 0.755013, 0.166443, 0.789062, 1 )
-trail_source = NodePath("../spaceship_root/spaceship_physics/spring")
-trail_particle = NodePath("../spaceship_root/spaceship_physics/power_particle")
+trail_source_path = NodePath("../spaceship_root/spaceship_physics/spring")
+trail_particle_path = NodePath("../spaceship_root/spaceship_physics/power_particle")
 
 [node name="death_emitter" type="Particles2D" parent="."]
 
@@ -55,14 +55,14 @@ params/final_size = 1.0
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
-color/color_ramp = SubResource( 3 )
+color/color_ramp = SubResource( 2 )
 
 [node name="spaceship_root" type="Node2D" parent="."]
 
 [node name="spaceship_physics" type="RigidBody2D" parent="spaceship_root"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
+shapes/0/shape = SubResource( 3 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -73,9 +73,9 @@ friction = 0.0
 bounce = 1.0
 gravity_scale = 0.0
 custom_integrator = false
-continuous_cd = 0
-contacts_reported = 0
-contact_monitor = false
+continuous_cd = 1
+contacts_reported = 1
+contact_monitor = true
 sleeping = false
 can_sleep = true
 velocity/linear = Vector2( 0, 0 )
@@ -95,7 +95,7 @@ __meta__ = { "__editor_plugin_screen__":"2D" }
 
 [node name="collision" type="CollisionShape2D" parent="spaceship_root/spaceship_physics"]
 
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0
 
