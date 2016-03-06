@@ -8,7 +8,7 @@
 
 [node name="game" type="Node2D"]
 
-__meta__ = { "__editor_plugin_screen__":"2D" }
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="bg" type="Sprite" parent="."]
 
