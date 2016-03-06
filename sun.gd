@@ -5,9 +5,6 @@ var spring
 
 var to_bh = Vector2(0,0)
 
-export var blackhole_pull = 0.75
-export var blackhole_push = 0.5
-
 export var player_index = 0
 export(NodePath) var blackhole_path = null
 var blackhole = null
@@ -48,6 +45,4 @@ func _fixed_process(delta):
 	if (blackhole):
 		to_bh = get_global_pos() - blackhole.get_global_pos()
 		if (to_bh.length() >= 500):
-			set_applied_force(to_bh.normalized() * -blackhole_pull)
-		else:
-			set_applied_force(to_bh.normalized() * blackhole_pull)
+			set_applied_force(to_bh.normalized() * blackhole.push)
