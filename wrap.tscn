@@ -10,7 +10,7 @@ extents = Vector2( 960, 540 )
 [node name="wrapper" type="Node2D"]
 
 script/script = ExtResource( 1 )
-__meta__ = { "__editor_plugin_screen__":"2D" }
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="bounds" type="Area2D" parent="."]
 
@@ -23,6 +23,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision/mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bounds"]
 

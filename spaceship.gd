@@ -13,7 +13,10 @@ var LINEAR_FORCE = 150
 var ANGULAR_FORCE = 5
 var MAX_SPEED = 250
 
-export var player_index = 1
+export(NodePath) var trail_renderer_path = null
+var trail_renderer
+
+export var player_index = 0
 var player_actions = [
 	{"up":"ui_up", "down":"ui_down", "left":"ui_left", "right":"ui_right", "action":"player1_action"},
 	{"up":"player2_up", "down":"player2_down", "left":"player2_left", "right":"player2_right", "action":"player2_action"}
@@ -23,7 +26,10 @@ var up_pressed = false
 var down_pressed = false
 var left_pressed = false
 var right_pressed = false
+
 var spring
+var initial_pos
+var trail_particle
 
 func _draw():
 	spring.set_node_b(get_path());
@@ -37,7 +43,12 @@ func _draw():
 	
 
 func _ready():
+	add_to_group("killable")
 	spring = get_node("spring")
+	trail_particle = get_node("power_particle")
+	trail_renderer = get_node(trail_renderer_path)
+	
+	initial_pos = get_pos()
 	
 	set_fixed_process(true)
 	set_process_input(true)
@@ -67,8 +78,12 @@ func _fixed_process(delta):
 func _input(event):
 	if (event.is_action_pressed(player_actions[player_index]["up"])):
 		up_pressed = true
+		trail_particle.set_emitting(true)
+		trail_renderer.set_capturing(true)
 	if (event.is_action_released(player_actions[player_index]["up"])):
 		up_pressed = false
+		trail_particle.set_emitting(false)
+		trail_renderer.set_capturing(false)
 	
 	if (event.is_action_pressed(player_actions[player_index]["down"])):
 		down_pressed = true
@@ -93,4 +108,8 @@ func _integrate_forces(state):
 	
 	if (velocity.length() > MAX_SPEED):
 		velocity = velocity.normalized()
-		state.set_linear_velocity(velocity * MAX_SPEED) 
+		state.set_linear_velocity(velocity * MAX_SPEED)
+	
+func kill():
+	set_pos(initial_pos)
+	spring.set_node_a(NodePath(""))

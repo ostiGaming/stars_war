@@ -8,16 +8,22 @@ var capturing = false
 var lifetime = 3000
 var decays = []
 var trails = []
+var collisions = []
 
+export var player_index = 0
 export var trail_width = 5
 export(Color) var trail_color = Color(1.0, 1.0, 1.0, 1.0)
 export(NodePath) var trail_source = null
+export(NodePath) var trail_particle = null
 onready var _source = get_node(trail_source)
 
 func _ready():
 	set_process(true)
+	set_fixed_process(true)
 	set_process_input(true)
-	pass
+	
+	var yes = get_node(trail_particle)
+	yes.set_color(trail_color)
 
 func _draw():
 	for trail_idx in range(0, trails.size()):
@@ -39,6 +45,34 @@ func get_trail_brush(trail_idx, fpos):
 	var brush = trail_color
 	brush.a = (interp_decay - OS.get_ticks_msec()) / lifetime 
 	return brush
+
+func _fixed_process(delta):
+	for collision in collisions:
+		remove_child(collision)
+	
+	collisions.clear()
+	
+	for trail in trails:
+		for t in range(0, trail.get_point_count() - 1):
+			var point1 = trail.get_point_pos(t)
+			var point2 = trail.get_point_pos(t + 1)
+			
+			var body = StaticBody2D.new()
+			var shape = RectangleShape2D.new()
+			
+			shape.set_extents((point2 - point1)/2)
+			body.set_pos(trail.interpolatef(t + 0.5))
+			body.add_shape(shape)
+			
+			if player_index == 0:
+				body.set_layer_mask(1)
+				body.set_collision_mask(1)
+			else:
+				body.set_layer_mask(2)
+				body.set_collision_mask(2)
+			
+			collisions.append(body)
+			add_child(body)
 
 func _process(delta):
 	var dirty = false
@@ -70,6 +104,7 @@ func generate_trail():
 	
 func decay_trails():
 	var decayed = false
+	var empty_trails = []
 	for i in range(0, trails.size()):
 		var trail = trails[i]
 		var decay = decays[i]
@@ -78,17 +113,21 @@ func decay_trails():
 				decayed = true
 				trail.remove_point(t)
 				decay.remove(t)
-				if t == 0 && decays.size() > 1: 
-					decays.remove(i)
-					trails.remove(i)
+				if t == 0 && decays.size() > 1:
+					empty_trails.append(i)
 			else: break
+	
+	for i in empty_trails:
+		decays.remove(i)
+		trails.remove(i)
+	
 	return decayed
 
-func _input(ev):
-	if (ev.type == InputEvent.MOUSE_BUTTON && ev.pressed == 0):
-		capturing = !capturing
-		if (capturing): new_trail()
-		print("Capturing?: ", capturing)
+func set_capturing(value):
+	capturing = !capturing
+	if (capturing):
+		new_trail()
+	
 
 func get_trail_pos():
 	return _source.get_global_pos()

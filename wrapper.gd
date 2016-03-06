@@ -2,7 +2,6 @@ extends Node
 
 signal on_wrap(position)
 
-var center_of_viewport = Vector2(0,0)
 onready var bounds = get_node("bounds")
 
 func connect_on_wrap(wrapper):
