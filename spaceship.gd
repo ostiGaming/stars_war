@@ -14,21 +14,26 @@ var up_pressed = false
 var down_pressed = false
 var left_pressed = false
 var right_pressed = false
+
 var spring
+var initial_pos
 
 func _draw():
-	spring.set_node_b(get_path());
+	if spring != null:
+		spring.set_node_b(get_path());
 	
-	var node_a = spring.get_node_a()
-	var node_b = spring.get_node_b()
-	
-	if (node_a != null && !node_a.is_empty() && node_b != null && !node_b.is_empty()):
-		var position = get_transform().basis_xform_inv(get_node(node_a).get_global_pos() - get_global_pos()) 
-		draw_line(position, Vector2(0, 0), Color("#000000"), 5)
+		var node_a = spring.get_node_a()
+		var node_b = spring.get_node_b()
+		
+		if (node_a != null && !node_a.is_empty() && node_b != null && !node_b.is_empty()):
+			var position = get_transform().basis_xform_inv(get_node(node_a).get_global_pos() - get_global_pos()) 
+			draw_line(position, Vector2(0, 0), Color("#000000"), 5)
 	
 
 func _ready():
+	add_to_group("killable")
 	spring = get_node("spring")
+	initial_pos = get_pos()
 	
 	set_fixed_process(true)
 	set_process_input(true)
@@ -84,4 +89,8 @@ func _integrate_forces(state):
 	
 	if (velocity.length() > MAX_SPEED):
 		velocity = velocity.normalized()
-		state.set_linear_velocity(velocity * MAX_SPEED) 
+		state.set_linear_velocity(velocity * MAX_SPEED)
+	
+func kill():
+	set_pos(initial_pos)
+	spring.set_node_a(NodePath(""))

@@ -13,7 +13,7 @@ extents = Vector2( 10, 18 )
 [node name="spaceship" type="Node2D"]
 
 script/script = ExtResource( 1 )
-__meta__ = { "__editor_plugin_screen__":"2D" }
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="trail_renderer" type="Node2D" parent="."]
 
