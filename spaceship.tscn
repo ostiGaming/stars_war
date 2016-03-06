@@ -1,17 +1,27 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://trail_renderer.gd" type="Script" id=1]
 [ext_resource path="res://spaceship.gd" type="Script" id=2]
 [ext_resource path="res://ship-sprite.png" type="Texture" id=3]
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Node\n\nonready var emitter = get_node(\"death_emitter\")\n\nfunc upon_spaceship_killed(death_pos):\n\temitter.set_global_pos(death_pos)\n\temitter.set_emitting(true)\n\nfunc _ready():\n\tget_node(\"spaceship_root/spaceship_physics\").connect(\"on_killed\", self, \"upon_spaceship_killed\")\n"
+
+[sub_resource type="ColorRamp" id=3]
+
+offsets = FloatArray( 0, 0.429887, 1 )
+colors = ColorArray( 0.597656, 0.0630341, 0.0630341, 1, 1, 0.613281, 0.722046, 1, 1, 1, 1, 1 )
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 18 )
 
-[node name="spaceship" type="Node2D"]
+[node name="spaceship_world" type="Node2D"]
 
-__meta__ = { "__editor_plugin_screen__":"Script" }
+script/script = SubResource( 2 )
+__meta__ = { "__editor_plugin_screen__":"2D", "_editor_collapsed":true }
 
 [node name="trail_renderer" type="Node2D" parent="."]
 
@@ -21,6 +31,31 @@ trail_width = 5
 trail_color = Color( 0.755013, 0.166443, 0.789062, 1 )
 trail_source = NodePath("../spaceship_root/spaceship_physics/spring")
 trail_particle = NodePath("../spaceship_root/spaceship_physics/power_particle")
+
+[node name="death_emitter" type="Particles2D" parent="."]
+
+config/amount = 120
+config/lifetime = 1.3
+config/emit_timeout = 1.3
+config/emitting = false
+config/explosiveness = 0.05
+params/direction = 0.0
+params/spread = 180.0
+params/linear_velocity = 100.0
+params/spin_velocity = 20.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 100.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 5.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color_ramp = SubResource( 3 )
 
 [node name="spaceship_root" type="Node2D" parent="."]
 
@@ -101,3 +136,5 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 color/color = Color( 0.796875, 0.102722, 0.102722, 1 )
+
+
