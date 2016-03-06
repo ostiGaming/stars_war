@@ -82,17 +82,17 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "Rotation"
 
-[node name="Particles2D" type="Particles2D" parent="."]
+[node name="Particles2D" type="Particles2D" parent="." groups=[ "sun" ]]
 
+transform/pos = Vector2( 0, 1.10803 )
 config/amount = 300
 config/lifetime = 3.0
-config/time_scale = 0.5
 config/preprocess = 3.0
 params/direction = 0.0
 params/spread = 150.0
-params/linear_velocity = 180.0
+params/linear_velocity = 145.0
 params/spin_velocity = 0.0
-params/orbit_velocity = -3.0
+params/orbit_velocity = -1.5
 params/gravity_direction = 0.0
 params/gravity_strength = 0.0
 params/radial_accel = 0.0

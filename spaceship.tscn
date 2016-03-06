@@ -112,7 +112,7 @@ rest_length = 20.0
 stiffness = 10.0
 damping = 1.0
 
-[node name="power_particle" type="Particles2D" parent="spaceship_root/spaceship_physics"]
+[node name="power_particle" type="Particles2D" parent="spaceship_root/spaceship_physics" groups=[ "sun" ]]
 
 config/amount = 500
 config/lifetime = 1.5
