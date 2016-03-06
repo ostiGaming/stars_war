@@ -33,6 +33,7 @@ var right_pressed = false
 var spring
 var initial_pos
 var trail_particle
+var stop_velocity = false
 
 func _draw():
 	spring.set_node_b(get_path());
@@ -106,13 +107,19 @@ func _input(event):
 		spring.set_node_a(NodePath(""))
 
 func _integrate_forces(state):
-	var velocity = state.get_linear_velocity()
-	
-	if (velocity.length() > MAX_SPEED):
-		velocity = velocity.normalized()
-		state.set_linear_velocity(velocity * MAX_SPEED)
+	if stop_velocity:
+		state.set_linear_velocity(Vector2(0, 0))
+		stop_velocity = false
+	else:
+		var velocity = state.get_linear_velocity()
+		
+		if (velocity.length() > MAX_SPEED):
+			velocity = velocity.normalized()
+			state.set_linear_velocity(velocity * MAX_SPEED)
 	
 func kill():
 	emit_signal("on_killed", get_global_pos())
 	set_pos(initial_pos)
+	set_rot(0)
 	spring.set_node_a(NodePath(""))
+	stop_velocity = true
