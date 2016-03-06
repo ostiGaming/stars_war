@@ -2,26 +2,26 @@
 
 [ext_resource path="res://trail_renderer.gd" type="Script" id=1]
 [ext_resource path="res://spaceship.gd" type="Script" id=2]
-[ext_resource path="res://ship-sprite.png" type="Texture" id=3]
+[ext_resource path="res://player1_spaceship.png" type="Texture" id=3]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Node\n\nonready var emitter = get_node(\"death_emitter\")\n\nfunc upon_spaceship_killed(death_pos):\n\temitter.set_global_pos(death_pos)\n\temitter.set_emitting(true)\n\nfunc _ready():\n\tget_node(\"spaceship_root/spaceship_physics\").connect(\"on_killed\", self, \"upon_spaceship_killed\")\n"
 
-[sub_resource type="ColorRamp" id=3]
+[sub_resource type="ColorRamp" id=2]
 
 offsets = FloatArray( 0, 0.429887, 1 )
 colors = ColorArray( 0.597656, 0.0630341, 0.0630341, 1, 1, 0.613281, 0.722046, 1, 1, 1, 1, 1 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 18 )
+extents = Vector2( 22, 22 )
 
 [node name="spaceship_world" type="Node2D"]
 
-script/script = SubResource( 2 )
-__meta__ = { "__editor_plugin_screen__":"2D", "_editor_collapsed":true }
+script/script = SubResource( 1 )
+__meta__ = { "__editor_plugin_screen__":"2D" }
 
 [node name="trail_renderer" type="Node2D" parent="."]
 
@@ -55,15 +55,15 @@ params/final_size = 1.0
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
-color/color_ramp = SubResource( 3 )
+color/color_ramp = SubResource( 2 )
 
 [node name="spaceship_root" type="Node2D" parent="."]
 
 [node name="spaceship_physics" type="RigidBody2D" parent="spaceship_root"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, -10 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -89,13 +89,14 @@ player_index = 0
 
 [node name="spaceship_sprite" type="Sprite" parent="spaceship_root/spaceship_physics"]
 
-transform/pos = Vector2( 0.707107, -4.29289 )
 texture = ExtResource( 3 )
+offset = Vector2( 0, -10 )
 __meta__ = { "__editor_plugin_screen__":"2D" }
 
 [node name="collision" type="CollisionShape2D" parent="spaceship_root/spaceship_physics"]
 
-shape = SubResource( 1 )
+transform/pos = Vector2( 0, -10 )
+shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0
 
@@ -117,7 +118,7 @@ config/amount = 500
 config/lifetime = 1.5
 config/preprocess = 0.1
 config/emitting = false
-config/offset = Vector2( 0, 12 )
+config/offset = Vector2( 0, 15 )
 config/local_space = false
 params/direction = 0.0
 params/spread = 25.0
