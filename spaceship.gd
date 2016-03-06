@@ -1,8 +1,11 @@
 extends RigidBody2D
 
+signal on_killed(death_pos)
+
 # called when the entity is being wrapped
 func _init():
 	add_to_group("wrappable")
+	add_to_group("killable")
 
 func wrap(position):
 	get_node("../../trail_renderer").new_trail()
@@ -43,7 +46,6 @@ func _draw():
 	
 
 func _ready():
-	add_to_group("killable")
 	spring = get_node("spring")
 	trail_particle = get_node("power_particle")
 	trail_renderer = get_node(trail_renderer_path)
@@ -111,5 +113,6 @@ func _integrate_forces(state):
 		state.set_linear_velocity(velocity * MAX_SPEED)
 	
 func kill():
+	emit_signal("on_killed", get_global_pos())
 	set_pos(initial_pos)
 	spring.set_node_a(NodePath(""))
