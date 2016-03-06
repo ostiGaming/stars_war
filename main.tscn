@@ -9,7 +9,7 @@
 
 [node name="game" type="Node2D"]
 
-__meta__ = { "__editor_plugin_screen__":"2D" }
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="bg" type="Sprite" parent="."]
 
@@ -37,6 +37,21 @@ transform/pos = Vector2( 1520, 900 )
 transform/pos = Vector2( -2.51752, 0 )
 collision/layers = 14
 collision/mask = 14
+mass = 0.2
+
+[node name="power_particle" parent="player1/spaceship_root/spaceship_physics"]
+
+config/preprocess = 0.1
+
+[node name="propeller_particle_left" parent="player1/spaceship_root/spaceship_physics"]
+
+config/lifetime = 0.4
+config/preprocess = 0.1
+
+[node name="propeller_particle_right" parent="player1/spaceship_root/spaceship_physics"]
+
+config/lifetime = 0.4
+config/preprocess = 0.1
 
 [node name="player2" parent="." instance=ExtResource( 2 )]
 
@@ -59,11 +74,26 @@ transform/pos = Vector2( 398.33, 903.34 )
 
 collision/layers = 13
 collision/mask = 13
+mass = 0.2
 player_index = 1
 
 [node name="spaceship_sprite" parent="player2/spaceship_root/spaceship_physics"]
 
 texture = ExtResource( 3 )
+
+[node name="power_particle" parent="player2/spaceship_root/spaceship_physics"]
+
+config/preprocess = 0.1
+
+[node name="propeller_particle_left" parent="player2/spaceship_root/spaceship_physics"]
+
+config/lifetime = 0.4
+config/preprocess = 0.1
+
+[node name="propeller_particle_right" parent="player2/spaceship_root/spaceship_physics"]
+
+config/lifetime = 0.4
+config/preprocess = 0.1
 
 [node name="black_hole" parent="." instance=ExtResource( 4 )]
 

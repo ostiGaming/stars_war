@@ -49,8 +49,8 @@ func get_trail_brush(trail_idx, fpos):
 
 func _fixed_process(delta):
 	for collision in collisions:
+		collision.queue_free()
 		remove_child(collision)
-	
 	collisions.clear()
 	
 	for trail in trails:
