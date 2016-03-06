@@ -4,6 +4,7 @@ var activate_spring_area
 export var player_index = 0
 
 func _ready():
+	add_to_group("winable")
 	activate_spring_area = get_node("activate_spring_area")
 	activate_spring_area.connect("body_enter",self,"_on_Area2D_body_enter")
 

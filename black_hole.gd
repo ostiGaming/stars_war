@@ -7,10 +7,8 @@ func _ready():
 	win_game_area.connect("body_enter",self,"_on_Area2D_body_enter")
 
 func _on_Area2D_body_enter(body):
-	print(body)
-	
 	if get_tree().get_nodes_in_group("killable").find(body) != -1:
-		print("I can kill you")
 		body.kill()
 
-
+	if get_tree().get_nodes_in_group("winable").find(body) != -1:
+		get_tree().reload_current_scene()
