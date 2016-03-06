@@ -29,13 +29,8 @@ func _ready():
 	if (blackhole_path): blackhole = get_node(blackhole_path)
 	
 func _on_Area2D_body_enter(body):
-	spring = body.get_node("spring")
-	
-	if (spring != null && (spring.get_node_a() == null || spring.get_node_a().is_empty())):
-		spring.set_node_a(get_path())
-
 	if body.has_node("spring"):
-		var spring = body.get_node("spring")
+		spring = body.get_node("spring")
 		
 		if (spring.get_node_a() == null || spring.get_node_a().is_empty()):
 			spring.set_node_a(get_path())
