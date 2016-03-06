@@ -1,23 +1,21 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=5 format=1]
 
-[ext_resource path="res://wrapable.gd" type="Script" id=1]
-[ext_resource path="res://trail_renderer.gd" type="Script" id=2]
-[ext_resource path="res://spaceship.gd" type="Script" id=3]
-[ext_resource path="res://ship-sprite.png" type="Texture" id=4]
+[ext_resource path="res://trail_renderer.gd" type="Script" id=1]
+[ext_resource path="res://spaceship.gd" type="Script" id=2]
+[ext_resource path="res://ship-sprite.png" type="Texture" id=3]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 18 )
 
 [node name="spaceship" type="Node2D"]
 
-script/script = ExtResource( 1 )
 __meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="trail_renderer" type="Node2D" parent="."]
 
-script/script = ExtResource( 2 )
+script/script = ExtResource( 1 )
 trail_width = 5
 trail_color = Color( 0.755013, 0.166443, 0.789062, 1 )
 trail_source = NodePath("../spaceship_root/spaceship_physics/spring")
@@ -27,7 +25,7 @@ trail_source = NodePath("../spaceship_root/spaceship_physics/spring")
 [node name="spaceship_physics" type="RigidBody2D" parent="spaceship_root"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 2 )
+shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -47,19 +45,19 @@ velocity/linear = Vector2( 0, 0 )
 velocity/angular = 0.0
 damp_override/linear = -1.0
 damp_override/angular = -1.0
-script/script = ExtResource( 3 )
+script/script = ExtResource( 2 )
 __meta__ = { "__editor_plugin_screen__":"2D" }
 player_index = 0
 
 [node name="spaceship_sprite" type="Sprite" parent="spaceship_root/spaceship_physics"]
 
 transform/pos = Vector2( 0.707107, -4.29289 )
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 __meta__ = { "__editor_plugin_screen__":"2D" }
 
 [node name="collision" type="CollisionShape2D" parent="spaceship_root/spaceship_physics"]
 
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 

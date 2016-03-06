@@ -1,5 +1,14 @@
 extends RigidBody2D
 
+# called when the entity is being wrapped
+func _init():
+	add_to_group("wrappable")
+
+func wrap(position):
+	get_node("../../trail_renderer").new_trail()
+	set_global_pos(position)
+
+# motion code
 var LINEAR_FORCE = 150
 var ANGULAR_FORCE = 5
 var MAX_SPEED = 250
