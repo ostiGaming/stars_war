@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://black_hole.gd" type="Script" id=1]
 [ext_resource path="res://black_hole.png" type="Texture" id=2]
@@ -17,6 +17,11 @@ tracks/0/type = "value"
 tracks/0/path = NodePath("black_hole_sprite:transform/rot")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":true, "times":FloatArray( 0, 10 ), "transitions":FloatArray( 1, 1 ), "values":[ 0.0, -360.0 ] }
+
+[sub_resource type="ColorRamp" id=3]
+
+offsets = FloatArray( 0, 0.206113, 0.999216 )
+colors = ColorArray( 0, 0, 0, 0, 0.524475, 0.425781, 1, 1, 1, 1, 1, 1 )
 
 [node name="black_hole_phycisc" type="RigidBody2D"]
 
@@ -76,5 +81,32 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "Rotation"
+
+[node name="Particles2D" type="Particles2D" parent="."]
+
+config/amount = 300
+config/lifetime = 3.0
+config/time_scale = 0.5
+config/preprocess = 3.0
+params/direction = 0.0
+params/spread = 150.0
+params/linear_velocity = 180.0
+params/spin_velocity = 0.0
+params/orbit_velocity = -3.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 100.0
+params/initial_angle = 0.0
+params/initial_size = 2.5
+params/final_size = 0.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+randomness/direction = 1.0
+randomness/linear_velocity = 0.1
+randomness/orbit_velocity = 0.5
+color/color_ramp = SubResource( 3 )
 
 
