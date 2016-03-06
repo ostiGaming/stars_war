@@ -138,4 +138,58 @@ params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 color/color = Color( 0.796875, 0.102722, 0.102722, 1 )
 
+[node name="propeller_particle_left" type="Particles2D" parent="spaceship_root/spaceship_physics"]
+
+transform/pos = Vector2( -20.4392, -11.3876 )
+config/amount = 100
+config/lifetime = 0.4
+config/preprocess = 0.1
+config/emitting = false
+config/offset = Vector2( 0, 15 )
+config/local_space = false
+params/direction = 0.0
+params/spread = 15.0
+params/linear_velocity = 200.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 4.0
+params/final_size = 0.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color = Color( 1, 0.632812, 0, 1 )
+
+[node name="propeller_particle_right" type="Particles2D" parent="spaceship_root/spaceship_physics"]
+
+transform/pos = Vector2( 19.75, -11.3876 )
+config/amount = 100
+config/lifetime = 0.4
+config/preprocess = 0.1
+config/emitting = false
+config/offset = Vector2( 0, 15 )
+config/local_space = false
+params/direction = 0.0
+params/spread = 15.0
+params/linear_velocity = 200.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 4.0
+params/final_size = 0.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color = Color( 1, 0.631373, 0, 1 )
+
 

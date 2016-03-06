@@ -28,12 +28,6 @@ config/lifetime = 1.3
 config/emit_timeout = 1.3
 config/explosiveness = 0.05
 
-[node name="death_emitter" parent="player1"]
-
-config/lifetime = 1.3
-config/emit_timeout = 1.3
-config/explosiveness = 0.05
-
 [node name="spaceship_root" parent="player1"]
 
 transform/pos = Vector2( 1399.75, 893.724 )
@@ -55,12 +49,6 @@ config/preprocess = 0.1
 
 player_index = 1
 trail_color = Color( 0.890625, 0.0556641, 0.0556641, 1 )
-
-[node name="death_emitter" parent="player2"]
-
-config/lifetime = 1.3
-config/emit_timeout = 1.3
-config/explosiveness = 0.05
 
 [node name="death_emitter" parent="player2"]
 
@@ -125,6 +113,7 @@ collision/mask = 9
 [node name="wrapper" parent="." instance=ExtResource( 6 )]
 
 visibility/visible = false
+
 
 [editable path="player1"]
 [editable path="player2"]
