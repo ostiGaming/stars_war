@@ -33,6 +33,8 @@ var right_pressed = false
 var spring
 var initial_pos
 var trail_particle
+var propeller_particle_left
+var propeller_particle_right
 var stop_velocity = false
 
 func _draw():
@@ -43,11 +45,13 @@ func _draw():
 	
 	if (node_a != null && !node_a.is_empty() && node_b != null && !node_b.is_empty()):
 		var position = get_transform().basis_xform_inv(get_node(node_a).get_global_pos() - get_global_pos()) 
-		draw_line(position, Vector2(0, 0), Color("#000000"), 5)
+		draw_line(position, Vector2(0, 0), Color("#ffffff"), 4)
 
 func _ready():
 	spring = get_node("spring")
 	trail_particle = get_node("power_particle")
+	propeller_particle_left = get_node("propeller_particle_left")
+	propeller_particle_right = get_node("propeller_particle_right")
 	trail_renderer = get_node(trail_renderer_path)
 	
 	initial_pos = get_pos()
@@ -91,20 +95,24 @@ func _input(event):
 		trail_particle.set_emitting(false)
 		trail_renderer.set_capturing(false)
 	
-	if (event.is_action_pressed(player_actions[player_index]["down"])):
-		down_pressed = true
-	if (event.is_action_released(player_actions[player_index]["down"])):
-		down_pressed = false
+	#if (event.is_action_pressed(player_actions[player_index]["down"])):
+	#	down_pressed = true
+	#if (event.is_action_released(player_actions[player_index]["down"])):
+	#	down_pressed = false
 	
 	if (event.is_action_pressed(player_actions[player_index]["left"])):
 		left_pressed = true
+		propeller_particle_right.set_emitting(true)
 	if (event.is_action_released(player_actions[player_index]["left"])):
 		left_pressed = false
+		propeller_particle_right.set_emitting(false)
 	
 	if (event.is_action_pressed(player_actions[player_index]["right"])):
 		right_pressed = true
+		propeller_particle_left.set_emitting(true)
 	if (event.is_action_released(player_actions[player_index]["right"])):
 		right_pressed = false
+		propeller_particle_left.set_emitting(false)
 		
 	if (event.is_action_pressed(player_actions[player_index]["action"])):
 		spring.set_node_a(NodePath(""))

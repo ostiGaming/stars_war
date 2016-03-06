@@ -125,7 +125,7 @@ func decay_trails():
 	return decayed
 
 func set_capturing(value):
-	capturing = !capturing
+	capturing = value
 	if (capturing):
 		new_trail()
 
