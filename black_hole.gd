@@ -1,12 +1,6 @@
 extends RigidBody2D
 
 var win_game_area
-export var push = 0.75
-export var debug = true
-
-func _draw():
-	if (!debug): return
-	draw_circle(Vector2(0,0), push * 100, Color("#FFFFFF"))
 
 func _ready():
 	win_game_area = get_node("win_game_area")
