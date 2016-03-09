@@ -47,34 +47,27 @@ func get_trail_brush(trail_idx, fpos):
 	brush.a = (interp_decay - OS.get_ticks_msec()) / lifetime 
 	return brush
 
-func _fixed_process(delta):
-	for collision in collisions:
-		collision.queue_free()
-		remove_child(collision)
-	collisions.clear()
+func add_collision_segment(trail):
+	var point1 = trail.get_point_pos(0)
+	var point2 = trail.get_point_pos(1)
 	
-	for trail in trails:
-		for t in range(0, min(trail.get_point_count(), trail_length) - 1):
-			var point1 = trail.get_point_pos(t)
-			var point2 = trail.get_point_pos(t + 1)
-			
-			var body = StaticBody2D.new()
-			body.set_meta("trail_source", player_index)
-			var shape = RectangleShape2D.new()
-			
-			shape.set_extents((point2 - point1)/2)
-			body.set_pos(trail.interpolatef(t + 0.5))
-			body.add_shape(shape)
-			
-			if player_index == 0:
-				body.set_layer_mask(1)
-				body.set_collision_mask(1)
-			else:
-				body.set_layer_mask(2)
-				body.set_collision_mask(2)
-			
-			collisions.append(body)
-			add_child(body)
+	var body = StaticBody2D.new()
+	body.set_meta("trail_source", player_index)
+	var shape = RectangleShape2D.new()
+	
+	shape.set_extents((point2 - point1)/2)
+	body.set_pos(trail.interpolatef(0.5))
+	body.add_shape(shape)
+	
+	if player_index == 0:
+		body.set_layer_mask(1)
+		body.set_collision_mask(1)
+	else:
+		body.set_layer_mask(2)
+		body.set_collision_mask(2)
+	
+	add_child(body)
+	return body
 
 func _process(delta):
 	var dirty = false
@@ -96,10 +89,13 @@ func generate_trail():
 	# edit last control point
 	var trail = trails[0]
 	var decay = decays[0]
+	var collision = collisions[0]
 	if (motion.length() >= distance):
 		# add new control point
 		trail.add_point(curpos, Vector2(0,0), Vector2(0,0), 0)
 		decay.push_front(OS.get_ticks_msec() + lifetime)
+		if (trail.get_point_count() > 1):
+			collision.push_front(add_collision_segment(trail))
 		return true
 	return false
 	
@@ -109,11 +105,20 @@ func decay_trails():
 	for i in range(0, trails.size()):
 		var trail = trails[i]
 		var decay = decays[i]
+		var collision = collisions[i]
 		for t in range(decay.size()-1, -1, -1):
 			if (decay[t] <= OS.get_ticks_msec()):
 				decayed = true
 				trail.remove_point(t)
 				decay.remove(t)
+				
+				# cleanup collision
+				if (t > 0):
+					var collider = collision[t-1]
+					remove_child(collider)
+					collider.queue_free()
+					collision.remove(t)
+				
 				if t == 0 && decays.size() > 1:
 					empty_trails.append(i)
 			else: break
@@ -146,3 +151,4 @@ func get_delta_from_trail():
 func new_trail():
 	trails.push_front(Curve2D.new())
 	decays.push_front([])
+	collisions.push_front([])
