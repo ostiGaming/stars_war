@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://trail_renderer.gd" type="Script" id=1]
 [ext_resource path="res://spaceship.gd" type="Script" id=2]
@@ -13,10 +13,30 @@ script/source = "extends Node\n\nonready var emitter = get_node(\"death_emitter\
 offsets = FloatArray( 0, 0.429887, 1 )
 colors = ColorArray( 0.597656, 0.0630341, 0.0630341, 1, 1, 0.613281, 0.722046, 1, 1, 1, 1, 1 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="ConvexPolygonShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 22, 22 )
+points = Vector2Array( 17.0242, 11.2188, 17.2179, 2.69547, 19.7362, -3.30959, 22.6419, 5.21371, 19.9299, 13.3496 )
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+
+custom_solver_bias = 0.0
+points = Vector2Array( -23.2678, 4.05145, -20.5558, -3.5033, -17.6501, 2.69547, -17.6501, 11.0251, -20.9432, 12.9622 )
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+
+custom_solver_bias = 0.0
+points = Vector2Array( -5.83372, 14.5119, -11.4514, 0.758354, -0.216095, -23.6493, 10.8255, -0.210205, 5.59525, 14.5119, -0.216095, 24.3912 )
+
+[sub_resource type="ConvexPolygonShape2D" id=6]
+
+custom_solver_bias = 0.0
+points = Vector2Array( -5.83372, 14.5119, -17.6501, 11.0251, -17.6501, 2.69547, -11.4514, 0.758354 )
+
+[sub_resource type="ConvexPolygonShape2D" id=7]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 17.0242, 11.2188, 5.59525, 14.5119, 10.8255, -0.210205, 17.2179, 2.69547 )
 
 [node name="spaceship_world" type="Node2D"]
 
@@ -63,8 +83,20 @@ color/color_ramp = SubResource( 2 )
 
 input/pickable = false
 shapes/0/shape = SubResource( 3 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, -10 )
+shapes/0/transform = Matrix32( 1, -0, 0, 1, 0, -10 )
 shapes/0/trigger = false
+shapes/1/shape = SubResource( 4 )
+shapes/1/transform = Matrix32( 1, -0, 0, 1, 0, -10 )
+shapes/1/trigger = false
+shapes/2/shape = SubResource( 5 )
+shapes/2/transform = Matrix32( 1, -0, 0, 1, 0, -10 )
+shapes/2/trigger = false
+shapes/3/shape = SubResource( 6 )
+shapes/3/transform = Matrix32( 1, -0, 0, 1, 0, -10 )
+shapes/3/trigger = false
+shapes/4/shape = SubResource( 7 )
+shapes/4/transform = Matrix32( 1, -0, 0, 1, 0, -10 )
+shapes/4/trigger = false
 collision/layers = 1
 collision/mask = 1
 mode = 0
@@ -93,12 +125,13 @@ texture = ExtResource( 3 )
 offset = Vector2( 0, -10 )
 __meta__ = { "__editor_plugin_screen__":"2D" }
 
-[node name="collision" type="CollisionShape2D" parent="spaceship_root/spaceship_physics"]
+[node name="collision" type="CollisionPolygon2D" parent="spaceship_root/spaceship_physics"]
 
 transform/pos = Vector2( 0, -10 )
-shape = SubResource( 3 )
+build_mode = 0
+polygon = Vector2Array( -11.4514, 0.758354, -17.6501, 2.69547, -20.5558, -3.5033, -23.2678, 4.05145, -20.9432, 12.9622, -17.6501, 11.0251, -5.83372, 14.5119, -0.216095, 24.3912, 5.59525, 14.5119, 17.0242, 11.2188, 19.9299, 13.3496, 22.6419, 5.21371, 19.7362, -3.30959, 17.2179, 2.69547, 10.8255, -0.210205, -0.216095, -23.6493 )
+shape_range = Vector2( 0, 4 )
 trigger = false
-_update_shape_index = 0
 
 [node name="spring" type="DampedSpringJoint2D" parent="spaceship_root/spaceship_physics"]
 
