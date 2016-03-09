@@ -15,6 +15,7 @@ func wrap(position):
 var LINEAR_FORCE = 150
 var ANGULAR_FORCE = 5
 var MAX_SPEED = 250
+var CARRY_MAX_SPEED = 200
 
 export(NodePath) var trail_renderer_path = null
 var trail_renderer
@@ -122,11 +123,15 @@ func _integrate_forces(state):
 		state.set_linear_velocity(Vector2(0, 0))
 		stop_velocity = false
 	else:
+		var maxSpeed = MAX_SPEED
 		var velocity = state.get_linear_velocity()
 		
-		if (velocity.length() > MAX_SPEED):
+		if (spring.get_node_a() != null && !spring.get_node_a().is_empty()):
+			maxSpeed = CARRY_MAX_SPEED
+		
+		if (velocity.length() > maxSpeed):
 			velocity = velocity.normalized()
-			state.set_linear_velocity(velocity * MAX_SPEED)
+			state.set_linear_velocity(velocity * maxSpeed)
 	
 func kill():
 	emit_signal("on_killed", get_global_pos())

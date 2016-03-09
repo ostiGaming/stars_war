@@ -1,11 +1,11 @@
 extends Node2D
 
-var distance = 10
-var resolution = 5
+var distance = 20
+var resolution = 7
 var trail_length = 30
 var decay_length = 5.0
 var capturing = false
-var lifetime = 3000
+var lifetime = 3500
 var decays = []
 var trails = []
 var collisions = []
@@ -54,7 +54,7 @@ func _fixed_process(delta):
 	collisions.clear()
 	
 	for trail in trails:
-		for t in range(0, trail.get_point_count() - 1):
+		for t in range(0, min(trail.get_point_count(), trail_length) - 1):
 			var point1 = trail.get_point_pos(t)
 			var point2 = trail.get_point_pos(t + 1)
 			
