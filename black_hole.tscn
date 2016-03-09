@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://black_hole.gd" type="Script" id=1]
 [ext_resource path="res://black_hole.png" type="Texture" id=2]
+[ext_resource path="res://particles_attractors.gd" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -64,6 +65,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 collision/layers = 7
 collision/mask = 7
+__meta__ = { "_editor_collapsed":true }
 
 [node name="collision" type="CollisionShape2D" parent="win_game_area"]
 
@@ -82,7 +84,7 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "Rotation"
 
-[node name="Particles2D" type="Particles2D" parent="." groups=[ "sun" ]]
+[node name="output" type="Particles2D" parent="." groups=[ "sun" ]]
 
 transform/pos = Vector2( 0, 1.10803 )
 config/amount = 300
@@ -108,5 +110,13 @@ randomness/direction = 1.0
 randomness/linear_velocity = 0.1
 randomness/orbit_velocity = 0.5
 color/color_ramp = SubResource( 3 )
+
+[node name="attactors" type="Node2D" parent="."]
+
+script/script = ExtResource( 3 )
+particle_group = "blackhole"
+gravity = 0.3
+radius = 900
+absorption = 50
 
 

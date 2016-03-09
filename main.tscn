@@ -9,12 +9,44 @@
 
 [node name="game" type="Node2D"]
 
-__meta__ = { "__editor_plugin_screen__":"Script" }
+__meta__ = { "__editor_plugin_screen__":"2D" }
 
 [node name="bg" type="Sprite" parent="."]
 
-transform/pos = Vector2( 956.099, 534.719 )
+transform/pos = Vector2( 7.02271, -3.09094 )
 texture = ExtResource( 1 )
+centered = false
+region_rect = Rect2( 0, 0, 1920, 1080 )
+
+[node name="stars" type="Particles2D" parent="." groups=[ "blackhole", "sun" ]]
+
+transform/pos = Vector2( 967.902, 543.025 )
+config/amount = 1024
+config/lifetime = 10.0
+config/time_scale = 0.25
+config/preprocess = 5.0
+config/half_extents = Vector2( 960, 540 )
+config/local_space = false
+params/direction = 0.0
+params/spread = 0.0
+params/linear_velocity = 0.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 2.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 1.0
+randomness/damping = 1.0
+randomness/initial_size = 1.0
+randomness/final_size = 1.0
+randomness/hue_variation = 1.0
 
 [node name="player1" parent="." instance=ExtResource( 2 )]
 
@@ -115,6 +147,12 @@ modulate = Color( 0.0588235, 1, 1, 0.694118 )
 collision/layers = 10
 collision/mask = 10
 
+[node name="attractors" parent="sun1"]
+
+gravity = 0.5
+radius = 300
+absorption = 0
+
 [node name="sun2" parent="." instance=ExtResource( 5 )]
 
 transform/pos = Vector2( 1520, 200 )
@@ -129,6 +167,12 @@ modulate = Color( 1, 0, 0, 0.695418 )
 
 collision/layers = 9
 collision/mask = 9
+
+[node name="attractors" parent="sun2"]
+
+gravity = 0.5
+radius = 300
+absorption = 0
 
 [node name="wrapper" parent="." instance=ExtResource( 6 )]
 
